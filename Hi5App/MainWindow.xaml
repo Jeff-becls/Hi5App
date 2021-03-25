@@ -1,0 +1,61 @@
+﻿<Window x:Class="Hi5App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Hi5App"
+        mc:Ignorable="d"
+        Title="Hi5App" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="160"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.Resources>
+            <DataTemplate x:Key="ContactListViewTemplate">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Ellipse x:Name="Ellipse"
+                    Grid.RowSpan="2"
+                    Width ="24"
+                    Height="24"
+                    Margin="6"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Fill="AliceBlue"/>
+                    <TextBlock Grid.Column="1" Text="{Binding Text}" FontSize="18" Margin="12,6,0,0"/>
+                    <TextBlock  Grid.Column="1" Grid.Row="1" Text="{Binding Name}" FontSize="12" Margin="12,0,0,6"/>
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate x:Key="NormalTemplate">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock x:Name="menuTextTextBlock" Text="{Binding Text}" FontSize="18"></TextBlock>
+                    <TextBlock x:Name="menuNameTextBlock" Grid.Row="1" Text="{Binding Name}" FontSize="10"></TextBlock>
+                </Grid>
+            </DataTemplate>
+
+        </Grid.Resources>
+
+        <ListView x:Name="MenuListView" Grid.Row="0" Grid.Column="0"
+                  ItemsSource="{Binding MenuItems}"
+                  ItemTemplate="{StaticResource ContactListViewTemplate}"
+                  SelectionChanged="MenuListView_SelectionChanged"
+                  >
+        </ListView>
+
+        <Frame x:Name="MainFrame" Grid.Column="1"></Frame>
+    </Grid>
+</Window>
