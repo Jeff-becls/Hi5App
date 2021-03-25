@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option csharp_namespace = "Hi5App";
+option csharp_namespace = "GrpcShopClient";
 
 package greet;
 
