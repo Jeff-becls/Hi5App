@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcShopClient";
+
+package StreamShop;
+
+service StreamShoper {
+  // Unary
+  rpc UnaryCall (ExampleRequest) returns (ExampleResponse);
+
+  // Server streaming
+  rpc StreamingFromServer (ExampleRequest) returns (stream ExampleResponse);
+
+  // Client streaming
+  rpc StreamingFromClient (stream ExampleRequest) returns (ExampleResponse);
+
+  // Bi-directional streaming
+  rpc StreamingBothWays (stream ExampleRequest) returns (stream ExampleResponse);
+}
+
+message ExampleRequest {
+    int32 pageIndex = 1;
+    int32 pageSize = 2;
+    bool isDescending = 3;
+}
+
+message ExampleResponse {
+    int32 totalCount = 1;
+	string message = 2;
+}

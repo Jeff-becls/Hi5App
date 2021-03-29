@@ -32,6 +32,7 @@ namespace GrpcShopService
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGrpcService<GreeterService>();
+                endpoints.MapGrpcService<StreamShopService>();
 
                 endpoints.MapGet("/", async context =>
                 {

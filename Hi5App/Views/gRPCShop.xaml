@@ -16,6 +16,8 @@
 
         <StackPanel>
             <Button x:Name="gRPCStartButton" Margin="4" Click="gRPCStartButton_Click">Sample gRPC</Button>
+
+            <Button x:Name="gRPCServerStreamButton" Margin="4" Click="gRPCServerStreamButton_Click">Server Stream</Button>
         </StackPanel>
 
         <TextBox x:Name="ResultTextBox" Grid.Column="1" Background="Azure"></TextBox>
