@@ -13,11 +13,29 @@
             <ColumnDefinition Width="160"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
+        <Grid.Resources>
+            <Style TargetType="Button">
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="Margin" Value="4"/>
+                <Setter Property="Height" Value="Auto"/>
+            </Style>
+        </Grid.Resources>
 
         <StackPanel>
-            <Button x:Name="gRPCStartButton" Margin="4" Click="gRPCStartButton_Click">Sample gRPC</Button>
+            <Button x:Name="gRPCStartButton" Click="gRPCStartButton_Click">Sample gRPC</Button>
+            <Rectangle Height="1" Fill="Black" Margin="0,4,0,4" HorizontalAlignment="Stretch"></Rectangle>
 
-            <Button x:Name="gRPCServerStreamButton" Margin="4" Click="gRPCServerStreamButton_Click">Server Stream</Button>
+            <Button x:Name="gRPCUnaryButton" Click="gRPCUnaryButton_Click">Unary Call</Button>
+            <Button x:Name="gRPCClientStreamButton" Click="gRPCClientStreamButton_Click">Client Stream</Button>
+            <Button x:Name="gRPCServerStreamButton" Click="gRPCServerStreamButton_Click">Server Stream</Button>
+            <Button x:Name="gRPCBothStreamButton" Click="gRPCBothStreamButton_Click">Both Stream</Button>
+
+            <Rectangle Height="1" Fill="Black" Margin="0,4,0,4" HorizontalAlignment="Stretch"></Rectangle>
+            <Button x:Name="gRPCStartIPCButton" Click="gRPCStartIPCButton_Click" Background="Beige">Sample IPC gRPC</Button>
+            
+            <Rectangle Height="1" Fill="Black" Margin="0,4,0,4" HorizontalAlignment="Stretch"></Rectangle>
+            <Button x:Name="gRPCBigDataBothStreamButton" Click="gRPCBigDataBothStreamButton_Click">Big Data B Stream</Button>
+            
         </StackPanel>
 
         <TextBox x:Name="ResultTextBox" Grid.Column="1" Background="Azure"></TextBox>

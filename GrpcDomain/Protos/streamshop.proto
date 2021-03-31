@@ -16,6 +16,9 @@ service StreamShoper {
 
   // Bi-directional streaming
   rpc StreamingBothWays (stream ExampleRequest) returns (stream ExampleResponse);
+
+  // Big data test
+  rpc SendingBigDataPackage(stream BigDataRequest) returns (stream CommonResponse);
 }
 
 message ExampleRequest {
@@ -27,4 +30,14 @@ message ExampleRequest {
 message ExampleResponse {
     int32 totalCount = 1;
 	string message = 2;
+}
+
+message BigDataRequest {
+    repeated string content = 1;
+    string dataType = 2;
+}
+
+message CommonResponse {
+    int32 code = 1;
+    string message = 2;
 }

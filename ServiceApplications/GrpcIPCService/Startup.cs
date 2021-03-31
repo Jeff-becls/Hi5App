@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GrpcShopService
+namespace GrpcIPCService
 {
     public class Startup
     {
@@ -16,10 +16,7 @@ namespace GrpcShopService
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddGrpc(options => {
-                options.MaxReceiveMessageSize = 10 * 2014 * 1024; //10MB
-                options.EnableDetailedErrors = true;
-            });
+            services.AddGrpc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,7 +32,6 @@ namespace GrpcShopService
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGrpcService<GreeterService>();
-                endpoints.MapGrpcService<StreamShopService>();
 
                 endpoints.MapGet("/", async context =>
                 {
