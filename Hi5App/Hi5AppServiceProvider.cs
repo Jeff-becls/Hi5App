@@ -33,7 +33,7 @@ namespace Hi5App
 
         public static T GetService<T>()
         {
-            return serviceProvider.CreateScope().ServiceProvider.GetService<T>();
+            return serviceProvider.GetService<T>();
         }
 
         private void ConfigureServices()
@@ -41,6 +41,7 @@ namespace Hi5App
             Services.Clear();
 
             Services.AddSingleton<IMainWindowViewModel, MainWindowViewModel>();
+            Services.AddSingleton<IgRPCShopViewModel, gRPCShopViewModel>();
 
             serviceProvider = Services.BuildServiceProvider();
 

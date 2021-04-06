@@ -11,6 +11,8 @@ namespace Hi5App
         public static void Initial()
         {
             Hi5AppServiceProvider serviceProvide = new Hi5AppServiceProvider();
+
+
             serviceProvide.Configure();
         
         }

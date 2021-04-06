@@ -29,8 +29,8 @@ namespace Hi5App
         {
             InitializeComponent();
 
-            // ViewModel = Hi5AppServiceProvider.GetService<IMainWindowViewModel>();
-            DataContext = new MainWindowViewModel();
+            ViewModel = Hi5AppServiceProvider.GetService<IMainWindowViewModel>();
+            DataContext = ViewModel; // new MainWindowViewModel();
 
             MainFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
             MainFrame.Navigate(new MainPage());

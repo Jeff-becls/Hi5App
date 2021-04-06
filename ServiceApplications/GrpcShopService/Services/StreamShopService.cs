@@ -18,7 +18,7 @@ namespace GrpcShopService
 
         public override Task<ExampleResponse> UnaryCall(ExampleRequest request, ServerCallContext context)
         {
-            var response = new ExampleResponse { TotalCount = request.PageIndex * request.PageSize, Message = $"##From Server## Current index from service is {request.PageIndex}" };
+            var response = new ExampleResponse { TotalCount = request.PageIndex * request.PageSize, Message = $"--From Server-- Current index from service is {request.PageIndex}" };
 
             return Task.FromResult(response);
         }
@@ -38,7 +38,7 @@ namespace GrpcShopService
             }
 
             
-            var response = new ExampleResponse { TotalCount = 0, Message = $"##From Server## Current indexes from server is {totalIndex}" };
+            var response = new ExampleResponse { TotalCount = 0, Message = $"--From Server-- Current indexes from server is {totalIndex}" };
 
             return response;
         }
@@ -49,7 +49,7 @@ namespace GrpcShopService
             startIndex = request.PageIndex;
             while (!context.CancellationToken.IsCancellationRequested)
             {
-                var response = new ExampleResponse { TotalCount = startIndex, Message = $"##From Server## Current index is {startIndex}" };
+                var response = new ExampleResponse { TotalCount = startIndex, Message = $"--From Server-- Current index is {startIndex}" };
                 startIndex++;
 
                 await responseStream.WriteAsync(response);
@@ -63,7 +63,7 @@ namespace GrpcShopService
         {
             await foreach (var message in requestStream.ReadAllAsync())
             {
-                var response = new ExampleResponse { TotalCount = message.PageIndex, Message = $"##From Server## Current index from response is {message.PageIndex}" };
+                var response = new ExampleResponse { TotalCount = message.PageIndex, Message = $"--From Server-- Current index from response is {message.PageIndex}" };
 
                 await responseStream.WriteAsync(response);
                 await Task.Delay(TimeSpan.FromSeconds(1),context.CancellationToken);
@@ -81,7 +81,7 @@ namespace GrpcShopService
 
                 var count = message.Content.Count;
 
-                var response = new CommonResponse { Code = 0, Message = $"##From Server## Current index from response is {message.DataType}, count: {count}" };
+                var response = new CommonResponse { Code = 0, Message = $"--From Server-- Current index from response is {message.DataType}, count: {count}" };
 
                 await responseStream.WriteAsync(response);
                 // await Task.Delay(10, context.CancellationToken);

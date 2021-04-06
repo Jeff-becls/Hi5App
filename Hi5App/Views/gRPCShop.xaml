@@ -12,6 +12,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="160"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="140"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.Resources>
             <Style TargetType="Button">
@@ -22,22 +23,49 @@
         </Grid.Resources>
 
         <StackPanel>
-            <Button x:Name="gRPCStartButton" Click="gRPCStartButton_Click">Sample gRPC</Button>
+            <Button x:Name="gRPCStartButton" Command="{Binding gRPCStartCmd}">Sample gRPC</Button>
             <Rectangle Height="1" Fill="Black" Margin="0,4,0,4" HorizontalAlignment="Stretch"></Rectangle>
 
-            <Button x:Name="gRPCUnaryButton" Click="gRPCUnaryButton_Click">Unary Call</Button>
-            <Button x:Name="gRPCClientStreamButton" Click="gRPCClientStreamButton_Click">Client Stream</Button>
-            <Button x:Name="gRPCServerStreamButton" Click="gRPCServerStreamButton_Click">Server Stream</Button>
-            <Button x:Name="gRPCBothStreamButton" Click="gRPCBothStreamButton_Click">Both Stream</Button>
+            <Button x:Name="gRPCUnaryButton" Command="{Binding gRPCUnaryCmd}">Unary Call</Button>
+            <Button x:Name="gRPCClientStreamButton" Command="{Binding gRPCClientStreamCmd}">Client Stream</Button>
+            <Button x:Name="gRPCServerStreamButton" Command="{Binding gRPCServerStreamCmd}">Server Stream</Button>
+            <Button x:Name="gRPCBothStreamButton" Command="{Binding gRPCBothStreamCmd}">Both Stream</Button>
 
             <Rectangle Height="1" Fill="Black" Margin="0,4,0,4" HorizontalAlignment="Stretch"></Rectangle>
-            <Button x:Name="gRPCStartIPCButton" Click="gRPCStartIPCButton_Click" Background="Beige">Sample IPC gRPC</Button>
+            <Button x:Name="gRPCStartIPCButton" Command="{Binding gRPCStartIPCCmd}" Background="Beige">Sample IPC gRPC</Button>
             
             <Rectangle Height="1" Fill="Black" Margin="0,4,0,4" HorizontalAlignment="Stretch"></Rectangle>
-            <Button x:Name="gRPCBigDataBothStreamButton" Click="gRPCBigDataBothStreamButton_Click">Big Data B Stream</Button>
+            <Button x:Name="gRPCBigDataBothStreamButton" Height="Auto" Command="{Binding gRPCBigDataBothStreamCmd}">
+                <Button.Content>
+                    <StackPanel>
+                        <TextBlock>Big Data B Stream</TextBlock>
+                        <TextBlock Text="{Binding ConfigString}" FontSize="12" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
             
         </StackPanel>
 
-        <TextBox x:Name="ResultTextBox" Grid.Column="1" Background="Azure"></TextBox>
+        <TextBox x:Name="ResultTextBox" Grid.Column="1" Background="Azure" Text="{Binding ResultMsg}"></TextBox>
+
+        <Grid x:Name="ConfigGrid" Grid.Column="2" Margin="4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <StackPanel x:Name="PackageSizePanel" Grid.Row="0" Orientation="Horizontal" Margin="4">
+                <TextBlock Width="80">Package Size:</TextBlock>
+                <TextBox x:Name="PackageSizeTextBox" Text="{Binding PackageSize, Mode=TwoWay}" Width="20" />
+                <TextBlock Margin="4,0,0,0">M</TextBlock>
+            </StackPanel>
+            <StackPanel x:Name="SendTimesPanel" Grid.Row="1" Orientation="Horizontal" Margin="4">
+                <TextBlock Width="80">Send Times:</TextBlock>
+                <TextBox x:Name="SendTimesTextBox" Text="{Binding SendTimes, Mode=TwoWay}" Width="20" />
+            </StackPanel>
+
+            <Button x:Name="ClearResultButton" Grid.Row="2" Command="{Binding ClearResultCmd}">Clear Result</Button>
+            
+        </Grid>
     </Grid>
 </Page>

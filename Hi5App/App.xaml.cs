@@ -20,9 +20,9 @@ namespace Hi5App
             // LoadCompleted += App_LoadCompleted;
         }
 
-        private void App_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
-        {
-            AppStartup.Initial();
-        }
+        //private void App_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
+        //{
+        //    AppStartup.Initial();
+        //}
     }
 }
