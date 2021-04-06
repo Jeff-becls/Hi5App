@@ -29,6 +29,7 @@ namespace Hi5App.ViewModels
         private ICommand _gRPCServerStreamCmd;
         private ICommand _gRPCBothStreamCmd;
         private ICommand _gRPCStartIPCCmd;
+        private ICommand _gRPCIPCBigDataBothStreamCmd;
         private ICommand _gRPCBigDataBothStreamCmd;
 
         private ICommand clearResultCmd;
@@ -79,6 +80,7 @@ namespace Hi5App.ViewModels
         public ICommand gRPCServerStreamCmd => _gRPCServerStreamCmd ?? (_gRPCServerStreamCmd = new DelegateCommand(gRPCServerStreamTry));
         public ICommand gRPCBothStreamCmd => _gRPCBothStreamCmd ?? (_gRPCBothStreamCmd = new DelegateCommand(gRPCBothStreamTry));
         public ICommand gRPCStartIPCCmd => _gRPCStartIPCCmd ?? (_gRPCStartIPCCmd = new DelegateCommand(gRPCStartIPCTry));
+        public ICommand gRPCIPCBigDataBothStreamCmd => _gRPCIPCBigDataBothStreamCmd ?? (_gRPCIPCBigDataBothStreamCmd = new DelegateCommand(gRPCIPCBigDataBothStreamTry));
         public ICommand gRPCBigDataBothStreamCmd => _gRPCBigDataBothStreamCmd ?? (_gRPCBigDataBothStreamCmd = new DelegateCommand(gRPCBigDataBothStreamTry));
 
         public ICommand ClearResultCmd => clearResultCmd ?? (clearResultCmd = new DelegateCommand(ClearResultAction));
@@ -240,6 +242,77 @@ namespace Hi5App.ViewModels
 
             AppendText(response.Message);
         }
+
+        private async void gRPCIPCBigDataBothStreamTry()
+        {
+            Stopwatch sw1 = new Stopwatch();
+            Stopwatch sw2 = new Stopwatch();
+
+            sw1.Start();
+
+            try
+            {
+                AppendText("starting  IPC big data Both Steam Calling...");
+                var channel = GrpcConnectionFactory.CreateUdsChannel();
+                var client = new StreamShoper.StreamShoperClient(channel);
+
+                var cancelSource = new CancellationTokenSource();
+                var token = cancelSource.Token;
+
+                var call = client.SendingBigDataPackage(null, null, token);
+                AppendText("Start to send data...");
+
+
+                sw2.Start();
+
+                AppendText($"Parameters: Send Times is {SendTimes}, Package size is {packageSize}M");
+
+                for (int i = SendTimes; i >= 0; i--)
+                {
+                    AppendText($"#From Client# the index is {i}");
+                    var request = new BigDataRequest { DataType = $"index{i}" };
+
+                    var strTmp = new string('A', (int)(1024 * 1024 * packageSize));
+
+                    var size = ((double)Encoding.UTF8.GetByteCount(strTmp) / (1024 * 1024)).ToString("f3");
+                    AppendText($"Per item size is {size}M");
+
+                    var times = 1; // total ~1M
+                    while (times > 0)
+                    {
+                        request.Content.Add(strTmp);
+                        times--;
+                    }
+
+                    await call.RequestStream.WriteAsync(request);
+
+                    await call.ResponseStream.MoveNext(token);
+                    var response = call.ResponseStream.Current;
+                    AppendText(response.Message);
+
+                    //AppendText("Waiting 2 seconds...");
+                    //await Task.Delay(2000);
+
+                    //await Task.Delay(100);
+                }
+                AppendText("Starting cancelling...");
+                cancelSource.Cancel();
+                AppendText("Cancelled");
+                sw2.Stop();
+
+            }
+            catch (Exception ex)
+            {
+                AppendText(ex.Message);
+                AppendText("Exception, Cancelling...");
+            }
+
+            sw1.Stop();
+
+            AppendText($"Sending data time cost:{sw2.Elapsed.TotalSeconds}");
+            AppendText($"Total time cost:{sw1.Elapsed.TotalSeconds}");
+        }
+
 
         private async void gRPCBigDataBothStreamTry()
         {

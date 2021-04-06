@@ -12,7 +12,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="160"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="140"></ColumnDefinition>
+            <ColumnDefinition Width="160"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.Resources>
             <Style TargetType="Button">
@@ -33,6 +33,14 @@
 
             <Rectangle Height="1" Fill="Black" Margin="0,4,0,4" HorizontalAlignment="Stretch"></Rectangle>
             <Button x:Name="gRPCStartIPCButton" Command="{Binding gRPCStartIPCCmd}" Background="Beige">Sample IPC gRPC</Button>
+            <Button x:Name="gRPCIPCBigDataBothStreamButton" Height="Auto" Command="{Binding gRPCIPCBigDataBothStreamCmd}">
+                <Button.Content>
+                    <StackPanel>
+                        <TextBlock>IPC Big B Stream</TextBlock>
+                        <TextBlock Text="{Binding ConfigString}" FontSize="12" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
             
             <Rectangle Height="1" Fill="Black" Margin="0,4,0,4" HorizontalAlignment="Stretch"></Rectangle>
             <Button x:Name="gRPCBigDataBothStreamButton" Height="Auto" Command="{Binding gRPCBigDataBothStreamCmd}">
@@ -46,7 +54,7 @@
             
         </StackPanel>
 
-        <TextBox x:Name="ResultTextBox" Grid.Column="1" Background="Azure" Text="{Binding ResultMsg}"></TextBox>
+        <TextBox x:Name="ResultTextBox" Grid.Column="1" Background="Azure" Text="{Binding ResultMsg}" VerticalScrollBarVisibility="Auto"></TextBox>
 
         <Grid x:Name="ConfigGrid" Grid.Column="2" Margin="4">
             <Grid.RowDefinitions>
@@ -56,12 +64,12 @@
             </Grid.RowDefinitions>
             <StackPanel x:Name="PackageSizePanel" Grid.Row="0" Orientation="Horizontal" Margin="4">
                 <TextBlock Width="80">Package Size:</TextBlock>
-                <TextBox x:Name="PackageSizeTextBox" Text="{Binding PackageSize, Mode=TwoWay}" Width="20" />
+                <TextBox x:Name="PackageSizeTextBox" Text="{Binding PackageSize, Mode=TwoWay}" Width="40" />
                 <TextBlock Margin="4,0,0,0">M</TextBlock>
             </StackPanel>
             <StackPanel x:Name="SendTimesPanel" Grid.Row="1" Orientation="Horizontal" Margin="4">
                 <TextBlock Width="80">Send Times:</TextBlock>
-                <TextBox x:Name="SendTimesTextBox" Text="{Binding SendTimes, Mode=TwoWay}" Width="20" />
+                <TextBox x:Name="SendTimesTextBox" Text="{Binding SendTimes, Mode=TwoWay}" Width="40" />
             </StackPanel>
 
             <Button x:Name="ClearResultButton" Grid.Row="2" Command="{Binding ClearResultCmd}">Clear Result</Button>
